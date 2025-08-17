@@ -27,7 +27,6 @@ router.post('/add',jwtHandler.authenticate, async (req,res)=>{
 
         // save the new user to the database
         const response=await newCanditate.save();
-        console.log('data saved');
         return res.status(200).json({response:response});
     }
     catch(err){
@@ -59,7 +58,6 @@ router.put('/update/:candidateID',jwtHandler.authenticate,async(req,res)=>{
         if(!response){
             return res.status(404).json({success:false,error:'candidate not found'});
         }
-        console.log("candidate update",response);
         return res.status(200).json({success:true,data:response});
     }
     catch(err){
@@ -80,7 +78,6 @@ router.delete('/delete/:candidateId',jwtHandler.authenticate,async(req,res)=>{
         if(!response){
             return res.status(403).json({error:'candidate not found'});
         }
-        console.log("candidate delete");
         res.status(200).json(response);
     }
     catch(err){

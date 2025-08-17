@@ -1,10 +1,8 @@
 import { useEffect, useState } from 'react';
-import {fetchCandidates} from '../utils/candidateapi';
-import {Link , useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
-
-export default function Candidates() {
-
+import { fetchCandidates } from '../utils/candidateapi';
+import { useNavigate,Link} from 'react-router-dom';
+export default function DashBoard() {
   const { user, refreshProfile, loading: authLoading } = useAuth();
   const [candidates, setCandidates] = useState([]);
   const [selected, setSelected] = useState(null);
@@ -76,26 +74,36 @@ const handleVote = () => {
   if (authLoading || loading) return <div className="p-6">Loading...</div>;
 
   return (
-    <div className='min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-200 via-indigo-300 to-gray-400 p-6'>
-      <div className="max-w-sm w-full  px-6  relative overflow-hidden">
-          <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">Candidates</h2>
-          {candidates.length === 0 ? (
-            <p>No candidates available.</p>
-          ) : (
-            <div>
-            {candidates.map((c) => (
-              <div key={c._id} className="flex place-items-stretch space-y-3 justify-between">
-                <div className='font-normal text-xl'>{c.name}</div>
-                <div className="flex flex-col gap-y-4">
-                  <Link to={`/vote/${c._id}`} className="bg-blue-600 text-white px-3 py-1 rounded ">
-                  vote
-                  </Link>
-                </div>
-              </div>
-            ))}
-          </div>
+    <div className="max-w-4xl mx-auto p-6 space-y-6">
+      <header className="flex justify-between items-center">
+        <div>
+          <h1 className="text-3xl font-bold">Voting Dashboard</h1>
+          {user && (
+            <p className="text-sm text-gray-600">
+              Welcome, <span className="font-medium">{user.name || user.email}</span> (
+              {user.role})
+            </p>
           )}
         </div>
+        <div>
+          {hasVoted ? (
+            <div className="text-green-700 bg-green-100 px-3 py-1 rounded">
+              You voted for:{' '}
+              {
+                candidates.find((c) => c._id === voteInfo?.candidateId)?.name ||
+                voteInfo?.candidateId
+              }
+            </div>
+          ) : (
+            <div className="text-yellow-700 bg-yellow-100 px-3 py-1 rounded">
+              You haven't voted yet.
+            </div>
+          )}
+        </div>
+      </header>
+
+      
     </div>
+      
   );
 }

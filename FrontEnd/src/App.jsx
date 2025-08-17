@@ -1,6 +1,5 @@
 import { useEffect,useState } from 'react'
-// import { getCandidates,getUsers,vote } from './utils/api';
-import { BrowserRouter,Routes,Route,Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes,Route,Link } from 'react-router-dom';
 import { AuthProvider,useAuth } from './AuthContext';
 import Signup from './component/Signup';
 import Login from './component/Login';
@@ -8,117 +7,81 @@ import Profile from './component/Profile';
 import ChangePassword from './component/ChangePassword';
 import Candidates from './component/Candidate';
 import CandidateForm from './component/CandidateForm';
+import AdminCandidates from './component/AdminCandidate';
+import VotePage from './component/VotePage'
+import VoteResults from './component/VoteResult';
+import Home from './component/Home';
 import './App.css'
+// import DashBoard from './component/DashBoard';
+import ProtectedRoute from './component/ProtectedRoute';
 
-function Nav() {
-  const { user, logout } = useAuth();
-  return (
-    <div className="flex gap-4 p-4 bg-gray-100">
-      <Link to="/" className="font-medium">Home</Link>
-      {!user && <Link to="/signup">Sign Up</Link>}
-      {!user && <Link to="/login">Login</Link>}
-      {user && <Link to="/profile">Profile</Link>}
-      {user && <Link to="/change-password">Change Password</Link>}
-      {user && <button onClick={logout} className="ml-auto text-red-500">Logout</button>}
-    </div>
-  );
-}
+// import Navbar from './component/Navbar';
 
-// function App1() {
-//    const [users, setUsers] = useState([]);
-//   const [candidates, setCandidates] = useState([]);
-//   const [selectedCandidate, setSelectedCandidate] = useState(null);
-//   const [status, setStatus] = useState('');
-
-//   useEffect(() => {
-//     getUsers().then(setUsers).catch(e => console.error(e));
-//     getCandidates().then(setCandidates).catch(e => console.error(e));
-//   }, []);
-
-//   const handleVote = async () => {
-//     if (!selectedCandidate) return;
-//     try {
-//       const res = await vote({ candidateId: selectedCandidate, userId: users[0]?.id });
-//       setStatus('Voted successfully');
-//       console.log(res);
-//     } catch (e) {
-//       setStatus('Vote failed: ' + e.message);
-//     }
-//   };
-
+// function Nav() {
+  
 //   return (
-//     <>
-//         <div className="max-w-xl mx-auto p-6 space-y-6 font-sans">
-//       <h1 className="text-2xl font-bold">Voting App</h1>
-
-//       <section className="bg-white shadow rounded p-4">
-//         <h2 className="font-semibold mb-2">Users</h2>
-//         {users.length === 0 ? (
-//           <p>No users loaded.</p>
-//         ) : (
-//           <ul className="list-disc list-inside">
-//             {users.map(u => (
-//               <li key={u.id}>{u.name || u.username || u.email || `User ${u.id}`}</li>
-//             ))}
-//           </ul>
+//     <div className="flex gap-4 p-4 bg-gray-100">
+//       <Link to="/">Home</Link>
+//       {user && <Link to="/dashboard" className="font-medium">DashBoard</Link>}  
+//       {user?.role === 'admin' && (
+//           <Link to="/admin/candidates" className="ml-4">
+//           Manage Candidates
+//         </Link>
 //         )}
-//       </section>
-
-//       <section className="bg-white shadow rounded p-4">
-//         <h2 className="font-semibold mb-2">Candidates</h2>
-//         {candidates.length === 0 ? (
-//           <p>No candidates loaded.</p>
-//         ) : (
-//           <div className="flex flex-col gap-2">
-//             {candidates.map(c => (
-//               <label key={c.id} className="flex items-center gap-2">
-//                 <input
-//                   type="radio"
-//                   name="candidate"
-//                   value={c.id}
-//                   onChange={() => setSelectedCandidate(c.id)}
-//                   checked={selectedCandidate === c.id}
-//                 />
-//                 <span>{c.name || `Candidate ${c.id}`}</span>
-//               </label>
-//             ))}
-//           </div>
-//         )}
-//       </section>
-
-//       <button
-//         onClick={handleVote}
-//         className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-//         disabled={!selectedCandidate || users.length === 0}
-//       >
-//         Vote
-//       </button>
-
-//       {status && <p className="mt-2">{status}</p>}
-//     </div>
-//     </>
-//   )
-// }
-export default function App() {
-  return (
-    <AuthProvider>
-      <BrowserRouter>
-        <Nav />
-        <div className="p-4">
-          <Routes>
-            <Route path="/" element={<div>Welcome to Voting App</div>} />
+//         {user && <Link to="/profile" className='ml-auto 20px'>
+//           <RiUser2Fill className='border-x-0'/>
+//           </Link>}
+//       </div>
+//     );
+//   }
+  
+  export default function App() {
+    const { user } = useAuth();
+    return ( 
+      
+      <>
+      <Router>
+        {/* <Navbar/> */}
+        <Routes>
+            <Route path='/' element={<Home/>}/>
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/change-password" element={<ChangePassword />} />
-            <Route path="/candidates" element={<Candidates />} />
-            <Route path="/candidates/new" element={<CandidateForm />} />
-            <Route path="/candidates/:id/edit" element={<CandidateForm />} />
-          </Routes>
-        </div>
-      </BrowserRouter>
-    </AuthProvider>
+            <Route path="/candidates" element={<ProtectedRoute user={user}><Candidates/></ProtectedRoute>}/>
+            <Route path="/results" element={<ProtectedRoute user={user}>
+              <VoteResults />
+              </ProtectedRoute>} />
+              <Route path="/profile" element={<ProtectedRoute user={user}>
+                <Profile /> 
+                </ProtectedRoute>}
+              />
+            <Route path="/change-password" element={<ProtectedRoute user={user}>
+              <ChangePassword />
+              </ProtectedRoute>
+              }/>
+            <Route path="/vote/:candidateId" 
+            element={<ProtectedRoute user={user}>
+              <VotePage />
+              </ProtectedRoute>
+              } />
+            <Route
+            path='/admin/candidates'
+            element={
+              <ProtectedRoute user={user} requiredRole="admin">
+                <AdminCandidates/>
+              </ProtectedRoute>
+            }
+            />
+            <Route path="/candidates/new" element={<ProtectedRoute user={user} requiredRole="admin">
+              <CandidateForm /> 
+            </ProtectedRoute>}
+            />
+            <Route path="/candidates/:id/edit" element={<ProtectedRoute user={user} requiredRole="admin">
+              <CandidateForm />
+            </ProtectedRoute>
+            }/>
+        </Routes>  
+      </Router>
+      </>
   );
 }
 
-// export default App1

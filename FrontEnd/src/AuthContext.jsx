@@ -2,7 +2,6 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import { getProfile } from './utils/userapi';
 
 const AuthContext = createContext();
-
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);

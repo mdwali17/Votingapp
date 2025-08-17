@@ -9,13 +9,13 @@ import { useParams, useNavigate } from 'react-router-dom';
 export default function CandidateForm() {
   const { id } = useParams(); // if editing
   const navigate = useNavigate();
-  const [form, setForm] = useState({ name: '', description: '' });
+  const [form, setForm] = useState({ name: '', party: '',age:'' });
   const [msg, setMsg] = useState('');
 
   useEffect(() => {
     if (id) {
       fetchCandidate(id)
-        .then(c => setForm({ name: c.name || '', description: c.description || '' }))
+        .then(c => setForm({ name: c.name || '', party: c.party || '',age: c.age || '' }))
         .catch(e => setMsg(e.message));
     }
   }, [id]);
@@ -50,12 +50,22 @@ export default function CandidateForm() {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium">Description</label>
-          <textarea
-            value={form.description}
-            onChange={(e) => setForm(f => ({ ...f, description: e.target.value }))}
+          <label className="block text-sm font-medium">Party</label>
+          <input
+            required
+            value={form.party}
+            onChange={(e) => setForm(f => ({ ...f, party: e.target.value }))}
             className="w-full border rounded px-3 py-2"
-            placeholder="Short bio or manifesto"
+            placeholder="Party"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium">Age</label>
+          <textarea
+            value={form.age}
+            onChange={(e) => setForm(f => ({ ...f, age: e.target.value }))}
+            className="w-full border rounded px-3 py-2"
+            placeholder="Candidate Age"
           />
         </div>
         <button className="bg-blue-600 text-white px-4 py-2 rounded" type="submit">
