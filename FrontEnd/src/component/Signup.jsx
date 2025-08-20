@@ -22,7 +22,7 @@ export default function Signup() {
       localStorage.setItem('token', res.token);
       toast.success('Signed up successfully');
       setTimeout(()=>{
-        navigate('/dashboard');
+        navigate('/');
       },1200)
     } catch (err) {
       toast.error(err.message);

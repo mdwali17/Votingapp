@@ -8,6 +8,7 @@ import { FaInstagram } from "react-icons/fa6";
 import { IoLogoFacebook } from "react-icons/io5";
 import { FaLinkedin } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
+import { Menu, X } from "lucide-react";
 
 
 
@@ -15,6 +16,8 @@ function Home() {
     const { user, logout,refreshProfile,loading:authLoading } = useAuth();
     const [candidates, setCandidates] = useState([]);
     const [loading,setLoading]=useState(true)
+    const [open, setOpen] = useState(false);
+
 
     const loadCandidates = async () => {
       try {
@@ -62,32 +65,111 @@ function Home() {
 
         <div className="min-h-screen bg-gradient-to-br from-indigo-700 via-gray-700 to-blue-800 text-white">
       {/* Navbar */}
-      <nav className="backdrop-blur-md bg-white/10 fixed w-full top-0 z-50 shadow-lg">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-extrabold tracking-wide">VoteSphere</h1>
-          <div className="flex items-center gap-5">
-            <a href="#home" className='font-semibold hover:text-black'>Home</a>
-            <a href="#features" className="font-semibold hover:text-black">Features</a>
-            <a href="#howtowork" className="font-semibold hover:text-black">How To Work</a>
-            <a href="#contact" className="font-semibold hover:text-black">Contact</a>
-        {!user && (
-          <>
-            <Link to="/login" className="px-4 py-2 border-2 border-white rounded-lg hover:bg-white hover:text-purple-600 transition">Login</Link>
-            <Link to="/signup" className="px-4 py-2 bg-white text-indigo-600 rounded-lg hover:bg-purple-100 transition">Register</Link>
-          </>
-        )}
-        {user && (
-          <>
-            {user.role === "admin" && (
-              <Link to="/admin/candidates" className=" font-semibold hover:text-black">Admin Panel</Link>
-            )}
-            <Link to="/profile" className="ml-auto flex items-center justify-center text-2xl hover:text-black"><VscAccount/></Link>
+       <nav className="backdrop-blur-md bg-white/10 fixed w-full top-0 z-50 shadow-lg">
+      <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+        
+        {/* Logo */}
+        <h1 className="text-2xl font-extrabold tracking-wide">VoteSphere</h1>
 
-          </>
-        )}
-      </div>
+        {/* Desktop Menu */}
+        <div className="hidden md:flex items-center gap-5">
+          <a href="#home" className="font-semibold hover:text-black">Home</a>
+          <a href="#features" className="font-semibold hover:text-black">Features</a>
+          <a href="#howtowork" className="font-semibold hover:text-black">How To Work</a>
+          <a href="#contact" className="font-semibold hover:text-black">Contact</a>
+
+          {!user && (
+            <>
+              <Link
+                to="/login"
+                className="px-4 py-2 border-2 border-white rounded-lg hover:bg-white hover:text-indigo-600 transition"
+              >
+                Login
+              </Link>
+              <Link
+                to="/signup"
+                className="px-4 py-2 bg-white text-indigo-600 rounded-lg hover:bg-purple-100 transition"
+              >
+                Register
+              </Link>
+            </>
+          )}
+
+          {user && (
+            <>
+              {user.role === "admin" && (
+                <Link
+                  to="/admin/candidates"
+                  className="font-semibold hover:text-black"
+                >
+                  Admin Panel
+                </Link>
+              )}
+              <Link
+                to="/profile"
+                className="ml-auto flex items-center justify-center text-2xl hover:text-black"
+              >
+                <VscAccount />
+              </Link>
+            </>
+          )}
         </div>
-      </nav>
+
+        {/* Mobile Menu Button */}
+        <button
+          className="md:hidden text-2xl"
+          onClick={() => setOpen(!open)}
+        >
+          {open ? <X /> : <Menu />}
+        </button>
+      </div>
+
+      {/* Mobile Dropdown */}
+      {open && (
+        <div className="md:hidden flex flex-col items-center gap-4 bg-white/20 py-6">
+          <a href="#home" className="font-semibold hover:text-black">Home</a>
+          <a href="#features" className="font-semibold hover:text-black">Features</a>
+          <a href="#howtowork" className="font-semibold hover:text-black">How To Work</a>
+          <a href="#contact" className="font-semibold hover:text-black">Contact</a>
+
+          {!user && (
+            <>
+              <Link
+                to="/login"
+                className="px-4 py-2 border-2 border-white rounded-lg hover:bg-white hover:text-purple-600 transition"
+              >
+                Login
+              </Link>
+              <Link
+                to="/signup"
+                className="px-4 py-2 bg-white text-indigo-600 rounded-lg hover:bg-purple-100 transition"
+              >
+                Register
+              </Link>
+            </>
+          )}
+
+          {user && (
+            <>
+              {user.role === "admin" && (
+                <Link
+                  to="/admin/candidates"
+                  className="font-semibold hover:text-black"
+                >
+                  Admin Panel
+                </Link>
+              )}
+              <Link
+                to="/profile"
+                className="flex items-center gap-2 text-lg hover:text-black"
+              >
+                <VscAccount /> Profile
+              </Link>
+            </>
+          )}
+        </div>
+      )}
+    </nav>
 
       {/* Hero Section */}
       <header id='home' className="max-w-7xl mx-auto px-6 pt-32 pb-20 flex flex-col md:flex-row items-center gap-10">
@@ -182,48 +264,82 @@ function Home() {
         </div>
       </section>
 
-      <footer  id='contact' className="text-center bg-gray-800 text-gray-300">
-        <div className='flex items-center justify-between mx-auto'>
-          <div className='flex items-center justify-between gap-40 mx-auto '>
-          <div className='p-4 space-y-4 '>
-            <h2 className='font-bold text-3xl '>Vote Sphere</h2>
-            <p className='max-w-xs text-start text-lg'>One vote can spark At VoteSphere,<br /> we bring voices together,<br />building a future led by the people.</p>
-          </div>
-            <div className='grid grid-cols-1 items-center space-y-4'>
-                <Link to="https://www.instagram.com/m.r.__khan_/#" className=" flex items-center text-xl hover:text-black "><FaInstagram /> Instagram</Link>
-                <Link to="https://www.facebook.com/profile.php?id=100017848996998&mibextid=rS40aB7S9Ucbxw6v" className=" flex items-center  text-xl hover:text-black"><IoLogoFacebook />Facebook</Link>
-                <Link to="https://www.linkedin.com/in/mohd-wali-891081256/" className=" flex items-center text-xl hover:text-black"><FaLinkedin />LinkedIn</Link>
-                <Link to="https://github.com/mdwali17" className=" flex items-center text-xl hover:text-black"><FaGithub />GitHub</Link>
-            </div>
-          </div>
-          <div className='flex items-center justify-between gap-40 px-6 mx-auto'>
-          <div className='grid grid-cols-1 space-y-2 text-start items-center'>
-            <a href="#home" className='text-xl hover:text-black ' >Home</a>
-            <a href="#features" className='text-xl hover:text-black' >Feature</a>
-            <a href="#howtowork" className='text-xl hover:text-black' >How To Work</a>
-          </div>
-            <div className='max-w-xs p-7'>
-            <h3 className='font-semibold text-xl '>Contact-us</h3>
-          <form action="" className='space-y-1 mt-3'>
-            <label htmlFor="" className='font-normal text-lg flex items-start'>Email
-              </label>
-            <input type="text"
-            placeholder='email'
-            className='w-full border-2 rounded-sm py-1 px-2'
-            />
-            <label htmlFor="" className='font-normal text-lg flex items-start '>Description
-              </label>
-            <input type="text"
-            placeholder='feedback'
-            className='w-full border-2 rounded-sm py-1 px-2'
-            />
-            <button type='submit' className='max-w-md bg-gray-500 rounded-sm mt-2 px-2 py-1 flex items-start text-black font-mono'>SEND FEEDBACK</button>
-          </form>
-          </div>
-            </div>
+      <footer id="contact" className="bg-gray-800 text-gray-300 text-center">
+      <div className="max-w-7xl mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-3 gap-10">
+        
+        {/* Left Section */}
+        <div className="space-y-4 text-start">
+          <h2 className="font-bold text-3xl">Vote Sphere</h2>
+          <p className="max-w-sm text-lg">
+            One vote can spark. At VoteSphere,<br /> 
+            we bring voices together,<br /> 
+            building a future led by the people.
+          </p>
         </div>
+
+        {/* Social Links */}
+        <div className="flex flex-col items-start space-y-4">
+          <Link
+            to="https://www.instagram.com/m.r.__khan_/#"
+            className="flex items-center gap-2 text-xl hover:text-white transition"
+          >
+            <FaInstagram /> Instagram
+          </Link>
+          <Link
+            to="https://www.facebook.com/profile.php?id=100017848996998&mibextid=rS40aB7S9Ucbxw6v"
+            className="flex items-center gap-2 text-xl hover:text-white transition"
+          >
+            <IoLogoFacebook /> Facebook
+          </Link>
+          <Link
+            to="https://www.linkedin.com/in/mohd-wali-891081256/"
+            className="flex items-center gap-2 text-xl hover:text-white transition"
+          >
+            <FaLinkedin /> LinkedIn
+          </Link>
+          <Link
+            to="https://github.com/mdwali17"
+            className="flex items-center gap-2 text-xl hover:text-white transition"
+          >
+            <FaGithub /> GitHub
+          </Link>
+        </div>
+
+        {/* Contact Form */}
+        <div className="text-start space-y-4">
+          <h3 className="font-semibold text-xl">Contact Us</h3>
+          <form className="space-y-3">
+            <div>
+              <label className="block text-lg mb-1">Email</label>
+              <input
+                type="email"
+                placeholder="Enter your email"
+                className="w-full border-2 rounded-md py-2 px-3 text-white focus:outline-none"
+              />
+            </div>
+            <div>
+              <label className="block text-lg mb-1">Description</label>
+              <textarea
+                placeholder="Your feedback"
+                className="w-full border-2 rounded-md py-2 px-3 text-white focus:outline-none"
+                rows="3"
+              />
+            </div>
+            <button
+              type="submit"
+              className="bg-gray-500 hover:bg-gray-400 transition rounded-md mt-2 px-4 py-2 text-white font-medium"
+            >
+              SEND FEEDBACK
+            </button>
+          </form>
+        </div>
+      </div>
+
+      {/* Footer Bottom */}
+      <div className="border-t border-gray-700 py-4 text-sm">
         © {new Date().getFullYear()} VoteNow. All rights reserved.
-      </footer>
+      </div>
+    </footer>
     </div>
   )
 }
