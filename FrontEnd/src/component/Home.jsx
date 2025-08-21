@@ -9,7 +9,7 @@ import { IoLogoFacebook } from "react-icons/io5";
 import { FaLinkedin } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
 import { Menu, X } from "lucide-react";
-
+import emailjs from "emailjs-com";
 
 
 function Home() {
@@ -47,6 +47,22 @@ function Home() {
         }
       }
     } catch {}
+  };
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    emailjs
+      .sendForm(
+        "service_5wu46wc",
+        "template_ger8fsk",
+        e.target,
+        "piRPxtqEPeQM2noJD"
+      )
+      .then(() => {
+        alert("Feedback sent!");
+      })
+      .catch((err) => console.error(err));
   };
 
     useEffect(() => {
@@ -308,7 +324,7 @@ function Home() {
         {/* Contact Form */}
         <div className="text-start space-y-4">
           <h3 className="font-semibold text-xl">Contact Us</h3>
-          <form className="space-y-3">
+          <form onSubmit={sendEmail} className="space-y-3">
             <div>
               <label className="block text-lg mb-1">Email</label>
               <input
