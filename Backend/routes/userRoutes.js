@@ -1,7 +1,7 @@
 const express=require('express');
 const router=express.Router();
-const User=require('./../../VotingApp/models/user');
-const jwtHandler=require('./../../VotingApp/jwt');
+const User=require('../models/user');
+const jwtHandler=require('../jwt');
 const { default: mongoose } = require('mongoose');
 
 router.get('/', (req, res) => {

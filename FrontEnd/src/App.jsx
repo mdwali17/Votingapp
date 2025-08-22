@@ -12,28 +12,8 @@ import VotePage from './component/VotePage'
 import VoteResults from './component/VoteResult';
 import Home from './component/Home';
 import './App.css'
-// import DashBoard from './component/DashBoard';
 import ProtectedRoute from './component/ProtectedRoute';
 
-// import Navbar from './component/Navbar';
-
-// function Nav() {
-  
-//   return (
-//     <div className="flex gap-4 p-4 bg-gray-100">
-//       <Link to="/">Home</Link>
-//       {user && <Link to="/dashboard" className="font-medium">DashBoard</Link>}  
-//       {user?.role === 'admin' && (
-//           <Link to="/admin/candidates" className="ml-4">
-//           Manage Candidates
-//         </Link>
-//         )}
-//         {user && <Link to="/profile" className='ml-auto 20px'>
-//           <RiUser2Fill className='border-x-0'/>
-//           </Link>}
-//       </div>
-//     );
-//   }
   
   export default function App() {
     const { user } = useAuth();
