@@ -8,7 +8,7 @@ const getAuthHeaders = () => {
 };
 
 export const fetchCandidates = async () => {
-  const res = await fetch(`${BASE}/candidate`, {
+  const res = await fetch(`${BASE}/`, {
     headers: getAuthHeaders(),
     credentials: 'include',
   });
