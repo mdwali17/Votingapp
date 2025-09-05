@@ -10,9 +10,9 @@ export default defineConfig({
   ],
   server:{
     proxy:{
-      '/user': 'http://localhost:3000',
-      '/candidate': 'http://localhost:3000',
-      '/voting': 'http://localhost:3000',
+      '/user': 'https://voting-6qcx.onrender.com/',
+      '/candidate': 'https://voting-6qcx.onrender.com/',
+      '/voting': 'https://voting-6qcx.onrender.com/',
     },
   },
 })
