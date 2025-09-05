@@ -57,7 +57,7 @@ const PORT = process.env.PORT || 3000;
 // Middleware
 app.use(express.json());
 app.use(cors({
-  origin: [ "http://localhost:5173" ], // add production domain later
+  origin: [ "https://votingapplication17.netlify.app/" ], // add production domain later
   credentials: true
 }));
 
