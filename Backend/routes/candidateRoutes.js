@@ -41,14 +41,12 @@ router.put('/update/:candidateID',jwtHandler.authenticate,async(req,res)=>{
             return res.status(403).json({success:false, message:"user has not admin role"});
         
         const candidateID=req.params.candidateID;
-        console.log("Candidate ID",candidateID);
 
         if(!mongoose.Types.ObjectId.isValid(candidateID)){
             console.log("Invalid Candidate ID");
             return res.status(400).json({success:false,error:"Invalid candidate ID format"});
         }
         const updateCandidateData=req.body;
-        console.log("updated id :",updateCandidateData);
 
         const response=await Candidate.findByIdAndUpdate(candidateID,updateCandidateData,{
             new:true,
@@ -97,7 +95,6 @@ router.get('/',async(req,res)=>{
     }
 })
 router.get('/:id',async(req,res)=>{
-    console.log(req.params.id);
     try{
         const candidate=await Candidate.findById(req.params.id);
         return res.status(200).json(candidate);
