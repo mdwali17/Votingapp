@@ -1,4 +1,4 @@
-const BASE = 'https://voting-6qcx.onrender.com/'
+const BASE = 'https://voting-6qcx.onrender.com'
 const getAuthHeaders = () => {
   const token = localStorage.getItem('token');
   return {
