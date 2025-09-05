@@ -11,9 +11,9 @@ export default defineConfig({
   base:"/",
   server:{
     proxy:{
-      '/user': 'https://voting-6qcx.onrender.com/',
-      '/candidate': 'https://voting-6qcx.onrender.com/',
-      '/voting': 'https://voting-6qcx.onrender.com/',
+      '/user': 'https://voting-6qcx.onrender.com',
+      '/candidate': 'https://voting-6qcx.onrender.com',
+      '/voting': 'https://voting-6qcx.onrender.com',
     },
   },
 })
