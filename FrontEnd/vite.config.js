@@ -8,7 +8,6 @@ export default defineConfig({
     react(),
     tailwindcss()
   ],
-  base:"https://voting-6qcx.onrender.com",
   server:{
     proxy:{
       '/user': 'https://voting-6qcx.onrender.com',
