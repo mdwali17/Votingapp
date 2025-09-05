@@ -17,11 +17,6 @@ router.post('/signup', async (req,res)=>{
         return res.status(400).json({error:'An admin user already exists'});
     }
     
-    // const user=await User.findOne({role:'user'});
-    // if(data.role =='user' && user){
-    //     return res.status(400).json({error:'A user with same role already exists'});
-    // }
-
     if(!/^\d{12}$/.test(data.adharCardNumber)){
         return res.status(400).json({error:'user with the same adhar card number already exist'})
     }
@@ -29,13 +24,8 @@ router.post('/signup', async (req,res)=>{
     const newUser=new User(data);
     // save the new user to the database
     const response=await newUser.save();
-    console.log('data saved');
-
 
     const token = jwtHandler.generate({ _id: newUser._id, email: newUser.email});
-        console.log('token:', token);
-
-
     res.status(200).json({response:response,token:token});
     }
     catch(err){

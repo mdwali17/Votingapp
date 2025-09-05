@@ -1,3 +1,4 @@
+const BASE = 'http://localhost:3000'
 const getAuthHeaders = () => {
   const token = localStorage.getItem('token');
   return {
@@ -7,7 +8,7 @@ const getAuthHeaders = () => {
 };
 
 export const fetchCandidates = async () => {
-  const res = await fetch('/candidate', {
+  const res = await fetch(`${BASE}/candidate`, {
     headers: getAuthHeaders(),
     credentials: 'include',
   });
@@ -16,7 +17,7 @@ export const fetchCandidates = async () => {
 };
 
 export const fetchCandidate = async (id) => {
-  const res = await fetch(`/candidate/${id}`, {
+  const res = await fetch(`${BASE}/candidate/${id}`, {
     headers: getAuthHeaders(),
     credentials: 'include',
   });
@@ -25,7 +26,7 @@ export const fetchCandidate = async (id) => {
 };
 
 export const addCandidate = async (payload) => {
-  const res = await fetch('/candidate/add', {
+  const res = await fetch(`${BASE}/candidate/add`, {
     method: 'POST',
     headers: getAuthHeaders(),
     body: JSON.stringify(payload),
@@ -39,7 +40,7 @@ export const addCandidate = async (payload) => {
 };
 
 export const updateCandidate = async (id, payload) => {
-  const res = await fetch(`/candidate/update/${id}`, {
+  const res = await fetch(`${BASE}/candidate/update/${id}`, {
     method: 'PUT',
     headers: getAuthHeaders(),
     body: JSON.stringify(payload),
@@ -53,7 +54,7 @@ export const updateCandidate = async (id, payload) => {
 };
 
 export const deleteCandidate = async (id) => {
-  const res = await fetch(`/candidate/delete/${id}`, {
+  const res = await fetch(`${BASE}/candidate/delete/${id}`, {
     method: 'DELETE',
     headers: getAuthHeaders(),
     credentials: 'include',

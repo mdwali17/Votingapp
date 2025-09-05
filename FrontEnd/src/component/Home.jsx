@@ -263,9 +263,9 @@ function Home() {
       </section>
 
       <section id='howtowork' className="py-16 min-h-8 bg-gray-700">
-        <div className="max-w-7xl mx-auto text-center text-blue-950">
+        <div className="max-w-7xl  text-center text-blue-950 mx-auto">
           <h3 className="text-3xl font-extrabold text-center mb-10 text-gray-800 text-shadow-2xs text-shadow-blue-700">How It Works</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 min-h-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 min-h-8 px-2">
             {["Register Your self", "Vote Your Favourite Candidate", "View Results to check the winner"].map((step, i) => (
               <div
                 key={i}
