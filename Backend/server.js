@@ -72,9 +72,9 @@ app.use("/candidate", candidateRoutes);
 app.use("/voting", votingRoutes);
 
 // Serve frontend (React build)
-app.use(express.static(path.join(__dirname, "../FrontEnd/dist")));
+app.use(express.static(path.join(__dirname, "../Frontend/dist")));
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../FrontEnd/dist/index.html"));
+  res.sendFile(path.join(__dirname, "../Frontend/dist/index.html"));
 });
 
 // Error handling middleware
