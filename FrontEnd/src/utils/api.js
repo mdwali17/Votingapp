@@ -1,4 +1,4 @@
-const BASE = import.meta.env.PORT; // same origin, because Express will serve the built frontend and API together
+const BASE = import.meta.env.VITE_API_URL; // same origin, because Express will serve the built frontend and API together
 
 async function request(path, options = {}) {
   const res = await fetch(path, {
