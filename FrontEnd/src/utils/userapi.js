@@ -27,19 +27,19 @@ const request = async (path, options = {}) => {
   return data;
 };
 
-export const signup = (payload) => request('/signup', {
+export const signup = (payload) => request('/user/signup', {
   method: 'POST',
   body: JSON.stringify(payload),
 });
 
-export const login = (payload) => request('/login', {
+export const login = (payload) => request('/user/login', {
   method: 'POST',
   body: JSON.stringify(payload),
 });
 
-export const getProfile = () => request('/profile');
+export const getProfile = () => request('/user/profile');
 
-export const changePassword = (payload) => request('/p/password', {
+export const changePassword = (payload) => request('/user/p/password', {
   method: 'PUT',
   body: JSON.stringify(payload),
 });
