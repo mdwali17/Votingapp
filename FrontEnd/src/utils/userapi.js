@@ -1,3 +1,4 @@
+const BASE = import.meta.env.VITE_API_URL;
 const request = async (path, options = {}) => {
   const token = localStorage.getItem('token');
   const headers = {
@@ -6,7 +7,7 @@ const request = async (path, options = {}) => {
     ...(options.headers || {}),
   };
 
-  const res = await fetch(path, {
+  const res = await fetch(`${BASE}/user,${path}`, {
     credentials: 'include',
     ...options,
     headers,
