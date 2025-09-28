@@ -32,7 +32,7 @@ function Home() {
     if (!user) return;
     try {
       // Assuming your backend exposes something like /voting/profile or returns vote status in profile
-      const res = await fetch(`/vote`, {
+      const res = await fetch(`/voting/vote`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem('token')}`,
