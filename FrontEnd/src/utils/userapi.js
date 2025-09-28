@@ -7,7 +7,7 @@ const request = async (path, options = {}) => {
     ...(options.headers || {}),
   };
 
-  const res = await fetch(`${BASE}/user,${path}`, {
+  const res = await fetch(`${BASE}/user${path}`, {
     credentials: 'include',
     ...options,
     headers,
