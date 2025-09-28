@@ -24,13 +24,13 @@ import ProtectedRoute from './component/ProtectedRoute';
         {/* <Navbar/> */}
         <Routes>
             <Route path='/' element={<Home/>}/>
-            <Route path="/user/signup" element={<Signup />} />
-            <Route path="/user/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/candidates" element={<ProtectedRoute user={user}><Candidates/></ProtectedRoute>}/>
             <Route path="/results" element={<ProtectedRoute user={user}>
               <VoteResults />
               </ProtectedRoute>} />
-              <Route path="/user/profile" element={<ProtectedRoute user={user}>
+              <Route path="/profile" element={<ProtectedRoute user={user}>
                 <Profile /> 
                 </ProtectedRoute>}
               />
