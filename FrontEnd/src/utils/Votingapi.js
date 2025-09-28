@@ -1,3 +1,4 @@
+const BASE = import.meta.env.VITE_API_URL;
 const getAuthHeaders = () => {
   const token = localStorage.getItem('token');
   return {
@@ -8,7 +9,7 @@ const getAuthHeaders = () => {
 
 // cast vote for candidateId via /vote/:candidateId
 export const castVote = async (candidateId) => {
-  const res = await fetch(`/voting/vote/${candidateId}`, {
+  const res = await fetch(`${BASE}/voting/vote/${candidateId}`, {
     method: 'POST',
     headers: getAuthHeaders(),
     credentials: 'include',
@@ -22,7 +23,7 @@ export const castVote = async (candidateId) => {
 
 // get vote counts
 export const fetchVoteCounts = async () => {
-  const res = await fetch('/voting/vote/count', {
+  const res = await fetch(`${BASE}/voting/vote/count`, {
     headers: getAuthHeaders(),
     credentials: 'include',
   });
